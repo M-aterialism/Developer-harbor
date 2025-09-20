@@ -112,4 +112,4 @@ $$(1-\sigma) \left \langle \nabla f(H), \hat H - H \right \rangle + \frac{1}{2} 
 
 ## 作者信息
 - 作者姓名：周澍锦
-- 联系方式：zhoushujin@tongji.edu.cn
+- 联系方式：Your_Beatitude@189.cn
