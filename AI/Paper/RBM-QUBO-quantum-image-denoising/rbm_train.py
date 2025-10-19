@@ -12,8 +12,8 @@ from sklearn.neural_network._rbm import BernoulliRBM
 
 import params
 
-train_features_path = params.train_features_path
-train_labels_path = params.train_labels_path
+train_feature_path = params.train_feature_path
+train_label_path = params.train_label_path
 rbm_path = params.rbm_path
 n_components = params.n_components
 learning_rate = params.learning_rate
@@ -32,15 +32,15 @@ def rbm_train():
     Returns:
 
     """
-    global train_features_path, train_labels_path, rbm_path, n_components, \
+    global train_feature_path, train_label_path, rbm_path, n_components, \
         learning_rate, batch_size, n_iter, verbose, random_state
 
     # 获取训练数据
-    train_features = np.load(train_features_path)
-    train_labels = np.load(train_labels_path)
+    train_feature_list = np.load(train_feature_path)
+    train_label_list = np.load(train_label_path)
 
     # 数据列表长度
-    num = len(train_labels)
+    num = len(train_label_list)
 
     # 创建并配置BernoulliRBM模型
     rbm = BernoulliRBM(
@@ -54,7 +54,7 @@ def rbm_train():
 
     # 训练RBM模型
     print("Start training...")
-    rbm.fit(train_features)
+    rbm.fit(train_feature_list)
     print("Finish training!")
 
     # 将数据保存为二进制文件
@@ -65,4 +65,3 @@ def rbm_train():
     np.save(rbm_path + "rbm_intercept_visible_.npy", - rbm.intercept_visible_)
 
     return
-

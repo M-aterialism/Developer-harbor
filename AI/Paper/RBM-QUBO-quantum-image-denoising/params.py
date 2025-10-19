@@ -13,10 +13,10 @@ import numpy as np
 train_list_path = 'mnist_jpg/train/'
 test_list_path = 'mnist_jpg/test/'
 
-train_features_path = 'data/MNIST_train_features.npy'
-train_labels_path = 'data/MNIST_train_labels.npy'
-test_features_path = 'data/MNIST_test_features.npy'
-test_labels_path = 'data/MNIST_test_labels.npy'
+train_feature_path = 'data/BAS_train_feats.npy'
+train_label_path = 'data/BAS_train_labels.npy'
+test_feature_path = 'data/BAS_test_feats.npy'
+test_label_path = 'data/BAS_test_labels.npy'
 evaluate_features_path = 'data/denoised_features_0.75.npy'
 evaluate_labels_path = 'data/denoised_labels_0.75.npy'
 
@@ -35,7 +35,7 @@ verbose = True  # 显示训练进度
 random_state = 42  # 随机种子
 
 # 推理参数
-sigmas = np.array([0.2])  # np.linspace(0.025, 0.25, num=10)
+sigmas = np.array([0.1])  # np.linspace(0.025, 0.25, num=10)
 betas = [0.75]  # sigma模式下设置
 rhos = np.log((1 - sigmas) / sigmas)  # rho模式下设置，需和sigmas大小匹配
 number_select = np.linspace(0, 9, num=10).astype(int)
@@ -44,7 +44,7 @@ number_select = np.linspace(0, 9, num=10).astype(int)
 anneal_initial_temperature = 100  # 初始温度
 anneal_alpha = 0.95  # 降温系数
 anneal_cutoff_temperature = 0.01  # 截止温度
-anneal_iterations_per_t = 10000  # 每个温度迭代深度
+anneal_iterations_per_t = 5000  # 每个温度迭代深度
 anneal_size_limit = 10  # 输出解的个数，默认输出100个解
 anneal_verbose = False  # 是否在控制台输出计算进度，默认False
 anneal_rand_seed = 42  # numpy随机数生成器的随机种子

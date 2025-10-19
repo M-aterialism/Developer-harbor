@@ -16,10 +16,8 @@ import params
 
 train_list_path = params.train_list_path
 test_list_path = params.test_list_path
-train_features_path = params.train_features_path
-train_labels_path = params.train_labels_path
-test_features_path = params.test_features_path
-test_labels_path = params.test_labels_path
+train_feature_path = params.train_feature_path
+train_label_path = params.train_label_path
 result_list_path = params.result_list_path
 number_select = params.number_select
 
@@ -123,8 +121,7 @@ def data_pretreat():
     Returns:
 
     """
-    global train_list_path, test_list_path, train_features_path, train_labels_path, \
-        test_features_path, test_labels_path, result_list_path
+    global train_list_path, test_list_path, train_feature_path, train_label_path, result_list_path, number_select
 
     # 训练集实际数据路径
     train_list = os.listdir(train_list_path)
@@ -144,8 +141,8 @@ def data_pretreat():
     pixels_list = create_12x12_binary(pixels_list, label_list)
 
     # 将数据保存为二进制文件
-    np.save(train_features_path, pixels_list)
-    np.save(train_labels_path, label_list)
+    np.save(train_feature_path, pixels_list)
+    np.save(train_label_path, label_list)
 
     # 测试集实际数据路径
     test_list = os.listdir(test_list_path)
@@ -168,9 +165,4 @@ def data_pretreat():
         path = result_list_path + "true_" + str(number_select[i]) + "_" + str(label_list[number_select[i]]) + ".png"
         display(pixels_list[number_select[i]], path)
 
-    # 将数据保存为二进制文件
-    np.save(test_features_path, pixels_list)
-    np.save(test_labels_path, label_list)
-
-    return
-
+    return pixels_list, label_list

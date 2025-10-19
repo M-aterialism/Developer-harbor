@@ -1,7 +1,7 @@
 """
 RBM QUBO Quantum Image Denoising
 
-这个文件用于处理噪声数据。
+这个文件用于数据加工噪声。
 
 作者：周澍锦
 联系方式：Your_Beatitude@189.cn
@@ -12,8 +12,8 @@ from PIL import Image
 
 import params
 
-test_features_path = params.test_features_path
-test_labels_path = params.test_labels_path
+test_feature_path = params.test_feature_path
+test_label_path = params.test_label_path
 result_list_path = params.result_list_path
 number_select = params.number_select
 
@@ -64,7 +64,7 @@ def add_salt_and_pepper(features, sigma):
 
 def noise_process(sigmas):
     """
-    噪声过程
+    噪声加工过程
 
     Args:
         sigmas: array[float], 噪声参数列表
@@ -72,18 +72,11 @@ def noise_process(sigmas):
     Returns:
         noisy_features_list: array[array[array[int]]], 带噪声的像素向量列表
     """
-    global test_features_path, test_labels_path, result_list_path, number_select
+    global test_feature_path, test_label_path, result_list_path, number_select
 
-    # 获取测试数据
-    test_features = np.load(test_features_path)
-    test_labels = np.load(test_labels_path)
-
-    # 制作真实数据
-    true_features = test_features[number_select]
-    true_labels = test_labels[number_select]
-    for i in range(len(number_select)):
-        path = result_list_path + "true_" + str(number_select[i]) + "_" + str(true_labels[i]) + ".png"
-        display(true_features[i], path)
+    # 获取真实测试数据
+    true_features = np.load(test_feature_path)
+    true_labels = np.load(test_label_path)
 
     # 制作噪声数据
     noisy_features_list = []
@@ -91,10 +84,9 @@ def noise_process(sigmas):
     for sigma in sigmas:
         noisy_features_list.append(add_salt_and_pepper(true_features, sigma))
         for i in range(len(number_select)):
-            path = result_list_path + "noisy_" + str(number_select[i]) + "_" + str(noisy_labels[i]) \
+            path = result_list_path + "noisy_" + str(number_select[i]) + "_" + str(noisy_labels[number_select[i]]) \
                    + "_" + str(round(sigma, 3)) + ".png"
-            display(noisy_features_list[-1][i], path)
+            display(noisy_features_list[-1][number_select[i]], path)
 
     noisy_features_list = np.array(noisy_features_list)
     return noisy_features_list, noisy_labels
-

@@ -1,7 +1,7 @@
 """
 RBM QUBO Quantum Image Denoising
 
-    这个文件用于求解QUBO问题以推理去噪图像。
+这个文件用于求解QUBO问题以推理去噪图像。
 
 作者：周澍锦
 联系方式：Your_Beatitude@189.cn
@@ -20,7 +20,7 @@ number_select = params.number_select
 
 # 授权初始化代码
 # 示例的user_id和sdk_code无效，需要替换成自己的用户ID和SDK授权码
-kw.license.init(user_id="77502211722072066", sdk_code="MLyFjG8olW6qDu2QcqDMBF38ZrAWrb")
+kw.license.init(user_id="77502211722072066", sdk_code="yeZw5s4c5cs4pbv6jNb91JH0koJosB")
 
 
 def display(feature, path):
@@ -66,7 +66,7 @@ def construct_tilde_qubo(components, intercept_hidden, intercept_visible, noisy_
     nv = len(intercept_visible)
     n = nh + nv
     qubo = np.zeros((n, n))
-    intercept_visible = intercept_visible - rho * (1 - 2 * noisy_feature)
+    intercept_visible = intercept_visible + rho * (1 - 2 * noisy_feature)
     for i in range(nv):
         for j in range(nv, n):
             qubo[i][j] = components[j-nv][i]
@@ -148,9 +148,9 @@ def solve_qubo_cim(qubo):
     return res
 
 
-def denoising(noisy_features_list, noisy_labels, rhos):
+def qubo_inference(noisy_features_list, noisy_labels, rhos):
     """
-    获取噪声
+    QUBO方法推理去噪图像
 
     Args:
         noisy_features_list: array[array[array[int]]], 带噪声的像素向量列表
@@ -178,12 +178,12 @@ def denoising(noisy_features_list, noisy_labels, rhos):
         for j in range(len(number_select)):
             # 构造QUBO系数矩阵
             qubo = construct_tilde_qubo(rbm_components, rbm_intercept_hidden, rbm_intercept_visible,
-                                        noisy_features[j], rho)
+                                        noisy_features[number_select[j]], rho)
             # 求解器求解QUBO问题
             vh = solve_qubo_anneal(qubo)
-            denoised_feature = vh[:len(noisy_features[j])]
-            path = result_list_path + "denoised_" + str(number_select[j]) + "_" + str(denoised_labels[j]) \
-                + "_" + str(round(rho, 3)) + ".png"
+            denoised_feature = vh[:len(noisy_features[number_select[j]])]
+            path = result_list_path + "denoised_" + str(number_select[j]) + "_" + \
+                str(denoised_labels[number_select[j]]) + "_" + str(round(rho, 3)) + ".png"
             display(denoised_feature, path)
             denoised_features.append(denoised_feature)
 
@@ -191,4 +191,3 @@ def denoising(noisy_features_list, noisy_labels, rhos):
 
     denoised_features_list = np.array(denoised_features_list)
     return denoised_features_list, denoised_labels
-
