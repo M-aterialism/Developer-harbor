@@ -4,7 +4,7 @@ NBMF Applies Image Feature Learning
 这个文件是本项目的主函数。
 
 作者：周澍锦
-联系方式：zhoushujin@tongji.edu.cn
+联系方式：Your_Beatitude@189.cn
 """
 
 import os

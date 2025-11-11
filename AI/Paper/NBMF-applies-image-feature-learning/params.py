@@ -4,7 +4,7 @@ NBMF Applies Image Feature Learning
 这个文件用于保存参数。
 
 作者：周澍锦
-联系方式：zhoushujin@tongji.edu.cn
+联系方式：Your_Beatitude@189.cn
 """
 
 # 文件数据参数
